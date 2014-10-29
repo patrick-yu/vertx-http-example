@@ -1,0 +1,23 @@
+{
+	"pg_conf": {
+		"address" : "event.bus.postgresql",
+		"connection" : "postgresql",
+		"host" : "10.21.201.231",
+		"port" : 54321,
+		"maxPoolSize" : 10,
+		"username" : "rs_gsp",
+		"password" : "",
+		"database" : "lb_th",
+		"moduleName" : "io.vertx~mod-mysql-postgresql~0.3.0-SNAPSHOT"
+	},
+	"payment_conf" : {
+		"local_address" : "http://localhost:8080",
+		"paysbuy_url" : "https://www.paysbuy.com/paynow.aspx",
+		"mol_redirect_url" : "https://mp.molthailand.com/web-test/index.php?r=site/index",
+		"mol_check_url" : "https://mp.molthailand.com/web-test/index.php?r=command/check",
+		"mpay_request_url" : "http://saichon- beauty.ais.co.th:8001/AISMPAYWeb/MerchantInterface"
+	},
+	"port": 8080,
+	"httl_config_path":"${project.build.directory}/conf/httl_pc.properties",
+	"handler_packages":["org.patrickyu.example.http.reqhandler"]
+}

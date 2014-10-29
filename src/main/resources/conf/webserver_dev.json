@@ -1,0 +1,20 @@
+{
+	"pg_conf": {
+		"address" : "event.bus.postgresql",
+		"connection" : "postgresql",
+		"host" : "10.21.201.231",
+		"port" : 54321,
+		"maxPoolSize" : 10,
+		"username" : "rs_gsp",
+		"password" : "",
+		"database" : "lb_th",
+		"moduleName" : "io.vertx~mod-mysql-postgresql~0.3.0-SNAPSHOT"
+	},
+	"paysbuy_conf": {
+		"paysbuy_url" : "https://www.paysbuy.com/paynow.aspx",
+		"local_address" : "http://xxxxxxxx:8080"
+	},
+	"port": 8080,
+	"httl_config_path":"${project.build.directory}/conf/httl_dev.properties",
+	"handler_packages":["com.gmtsoft.cpg.requesthandler"]
+}

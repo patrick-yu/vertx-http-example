@@ -1,0 +1,180 @@
+<project
+	xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>org.patrickyu</groupId>
+	<artifactId>vertx-http-example</artifactId>
+	<version>0.5</version>
+	<packaging>jar</packaging>
+
+	<properties>
+		<io.vertx.version>2.1.2</io.vertx.version>
+		<javautils.version>0.5</javautils.version>
+		<vertxutils.version>0.5</vertxutils.version>
+		<yoke.version>2.0.3</yoke.version>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<slf4j.version>1.7.5</slf4j.version>
+		<log4j.version>1.2.17</log4j.version>
+		<httl.version>1.0.11</httl.version>
+	</properties>
+
+	<dependencies>
+
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+			<version>${slf4j.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>jcl-over-slf4j</artifactId>
+			<version>${slf4j.version}</version>
+			<scope>runtime</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-log4j12</artifactId>
+			<version>${slf4j.version}</version>
+			<scope>runtime</scope>
+		</dependency>
+		<dependency>
+			<groupId>log4j</groupId>
+			<artifactId>log4j</artifactId>
+			<version>${log4j.version}</version>
+			<exclusions>
+				<exclusion>
+					<groupId>javax.mail</groupId>
+					<artifactId>mail</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>javax.jms</groupId>
+					<artifactId>jms</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>com.sun.jdmk</groupId>
+					<artifactId>jmxtools</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>com.sun.jmx</groupId>
+					<artifactId>jmxri</artifactId>
+				</exclusion>
+			</exclusions>
+			<scope>runtime</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>io.vertx</groupId>
+			<artifactId>vertx-core</artifactId>
+			<version>${io.vertx.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>io.vertx</groupId>
+			<artifactId>vertx-hazelcast</artifactId>
+			<version>${io.vertx.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>io.vertx</groupId>
+			<artifactId>vertx-platform</artifactId>
+			<version>${io.vertx.version}</version>
+		</dependency>
+
+		<dependency>
+		    <groupId>org.patrickyu</groupId>
+		    <artifactId>javautils</artifactId>
+		    <version>${javautils.version}</version>
+		</dependency>
+
+		<dependency>
+		    <groupId>org.patrickyu</groupId>
+		    <artifactId>vertxutils</artifactId>
+		    <version>${vertxutils.version}</version>
+		</dependency>
+
+		<dependency>
+            <groupId>com.jetdrone</groupId>
+            <artifactId>yoke</artifactId>
+            <version>${yoke.version}</version>
+            <scope>provided</scope>
+        </dependency>
+
+		<dependency>
+			<groupId>com.github.httl</groupId>
+			<artifactId>httl</artifactId>
+			<version>${httl.version}</version>
+		</dependency>
+
+
+	</dependencies>
+
+	<build>
+	    <plugins>
+	    	<plugin>
+				<groupId>io.vertx</groupId>
+				<artifactId>vertx-maven-plugin</artifactId>
+				<version>2.0.7-final</version>
+				<configuration>
+					<configFile>${project.build.directory}/conf/webserver_pc.json</configFile>
+					<instances>1</instances>
+					<pullInDeps>true</pullInDeps>
+				</configuration>
+	    	</plugin>
+
+		    <plugin>
+		        <groupId>org.apache.maven.plugins</groupId>
+		        <artifactId>maven-compiler-plugin</artifactId>
+		        <version>3.1</version>
+		        <configuration>
+		        	<source>1.7</source>
+		        	<target>1.7</target>
+		    	</configuration>
+			</plugin>
+
+			<plugin>
+			    <groupId>org.apache.maven.plugins</groupId>
+			    <artifactId>maven-dependency-plugin</artifactId>
+			    <configuration>
+			        <outputDirectory>
+			            ${project.build.directory}/lib
+			        </outputDirectory>
+			    </configuration>
+			</plugin>
+
+	    </plugins>
+
+	    <resources>
+	    	<resource>
+	    		<directory>src/main/resources</directory>
+	    		<filtering>true</filtering>
+	    		<excludes>
+	    			<exclude>shell/**</exclude>
+	    			<exclude>conf/**</exclude>
+	    			<exclude>mods/**</exclude>
+	    			<exclude>ant/**</exclude>
+	    		</excludes>
+	    	</resource>
+	    	<resource>
+	    		<directory>src/main/resources/ant</directory>
+	    		<filtering>true</filtering>
+	    		<targetPath>${basedir}/target-ant</targetPath>
+	    	</resource>
+	    	<resource>
+	    		<directory>src/main/resources/shell</directory>
+	    		<filtering>true</filtering>
+	    		<targetPath>${project.build.directory}/shell</targetPath>
+	    	</resource>
+	    	<resource>
+	    		<directory>src/main/resources/conf</directory>
+	    		<filtering>true</filtering>
+	    		<targetPath>${project.build.directory}/conf</targetPath>
+	    	</resource>
+	    	<resource>
+	    		<directory>src/main/resources/mods</directory>
+	    		<filtering>false</filtering>
+	    		<targetPath>${project.build.directory}/mods</targetPath>
+	    	</resource>
+	    </resources>
+	</build>
+
+</project>

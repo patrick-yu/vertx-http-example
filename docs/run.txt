@@ -1,0 +1,1 @@
+clean install dependency:copy-dependencies vertx:init vertx:runMod

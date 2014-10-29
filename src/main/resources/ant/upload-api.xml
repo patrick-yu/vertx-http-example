@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="Deploy event" default="none" basedir=".">
+	<property name="target-dir" value="${basedir}/target" />
+	<property name="remote-dir" value="/home/ymyoo/works/event" />
+	<property name="real-ip" value="www01.redsaharastudio.net" />
+	<property name="javautils" value="javautils-${javautils.version}.jar" />
+	<property name="this-module" value="${project.artifactId}-${project.version}.jar" />
+
+	<target name="none">
+	</target>
+
+	<target name="upload-real">
+		<property name="server-ip" value="${real-ip}" />
+		<antcall target="ready" />
+		<antcall target="scp-part" />
+	</target>
+
+	<target name="upload-real-all">
+		<property name="server-ip" value="${real-ip}" />
+		<antcall target="ready" />
+		<antcall target="scp-all" />
+	</target>
+
+
+	<target name="ready">
+		<delete dir="${target-dir}/for_upload" />
+		<mkdir dir="${target-dir}/for_upload"/>
+
+		<!--copy -->
+		<copy todir="${target-dir}/for_upload/conf">
+			<fileset dir="${target-dir}/conf"></fileset>
+		</copy>
+		<copy todir="${target-dir}/for_upload/shell">
+			<fileset dir="${target-dir}/shell"></fileset>
+		</copy>
+		<copy todir="${target-dir}/for_upload/mods">
+			<fileset dir="${target-dir}/mods"></fileset>
+		</copy>
+		<copy todir="${target-dir}/for_upload/mylib">
+			<fileset dir="${target-dir}/lib" includes="${javautils}" />
+			<fileset dir="${target-dir}/" includes="${this-module}" />
+		</copy>
+		<copy todir="${target-dir}/for_upload/lib">
+			<fileset dir="${target-dir}/lib" excludes="${javautils}" />
+		</copy>
+	</target>
+
+	<target name="scp-all">
+		<scp keyfile="/Users/stargatex/.ssh/id_rsa"
+			port="22" todir="ymyoo@${server-ip}:${remote-dir}" verbose="true">
+			<fileset dir="${target-dir}/for_upload" ></fileset>
+		</scp>
+	</target>
+
+	<target name="scp-part">
+		<scp keyfile="/Users/stargatex/.ssh/id_rsa"
+			port="22" todir="ymyoo@${server-ip}:${remote-dir}" verbose="true">
+			<fileset dir="${target-dir}/for_upload" excludes="mods/**/*,libs/**/*" />
+		</scp>
+	</target>
+
+
+</project>

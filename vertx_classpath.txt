@@ -1,0 +1,4 @@
+target/classes
+target/lib
+target/conf
+bin
